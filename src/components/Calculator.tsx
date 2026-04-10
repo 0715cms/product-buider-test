@@ -11,9 +11,9 @@ export default function Calculator() {
   };
 
   return (
-    <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg mx-auto my-12 text-white">
+    <div className="bg-slate-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg mx-auto my-12 text-white">
       <div className="flex items-center gap-4 mb-6">
-        <PiggyBank size={40} className="text-purple-400" />
+        <PiggyBank size={40} className="text-violet-400" />
         <h2 className="text-3xl font-bold">나의 경제적 자유 계산기</h2>
       </div>
 
@@ -27,12 +27,12 @@ export default function Calculator() {
             id="investment"
             value={investment}
             onChange={(e) => setInvestment(Number(e.target.value))}
-            className="w-full bg-gray-700 border-gray-600 rounded-lg p-3 text-xl text-white focus:ring-purple-500 focus:border-purple-500 transition"
+            className="w-full bg-slate-700 border-slate-600 rounded-lg p-3 text-xl text-white focus:ring-violet-500 focus:border-violet-500 transition"
             step={1000000}
           />
         </div>
 
-        <div className="bg-gray-700 p-6 rounded-lg">
+        <div className="bg-slate-700 p-6 rounded-lg">
           <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
             <BarChart className="text-green-400" />
             월 예상 배당금 (연 4% 배당률 가정)
@@ -43,14 +43,14 @@ export default function Calculator() {
           </p>
         </div>
 
-        <div className="bg-gray-700 p-6 rounded-lg">
+        <div className="bg-slate-700 p-6 rounded-lg">
           <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
             <TrendingUp className="text-blue-400" />
             경제적 자유 달성률 (월 300만원 목표)
           </h3>
-          <div className="w-full bg-gray-600 rounded-full h-4 overflow-hidden">
+          <div className="w-full bg-slate-600 rounded-full h-4 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-blue-400 to-purple-500 h-4 transition-all duration-500"
+              className="bg-gradient-to-r from-blue-400 to-violet-500 h-4 transition-all duration-500"
               style={{ width: `${freedomPercentage}%` }}
             ></div>
           </div>
@@ -58,7 +58,7 @@ export default function Calculator() {
         </div>
       </div>
 
-      <button className="mt-8 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg active:scale-95">
+      <button className="mt-8 w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg active:scale-95">
         진행시켜!
       </button>
     </div>

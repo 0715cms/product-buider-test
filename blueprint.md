@@ -1,61 +1,66 @@
-# E-경영 (E-Economic Freedom) 프로젝트 청사진
+# **Project Blueprint: E-경영 (E-Management) Dashboard**
 
-## 1. 프로젝트 개요
+This document serves as the single source of truth for the "E-경영" application. It details the project's overview, implemented features, design choices, and the plan for ongoing development.
 
-- **서비스명:** E-경영 (E-Economic Freedom, E-ETF)
-- **핵심 슬로건:** "ETF로 경제적 자유를 영위하자, 진행시켜!"
-- **기술 스택:** React, Vite, TypeScript, Tailwind CSS, Gemini API (Google Generative AI SDK)
-- **타겟 유저:** 초등학생도 이해할 수 있을 만큼 쉬운 정보를 원하는 투자 입문자
+## **1. Project Overview**
 
----
+**Purpose:** "E-경영" is a modern, web-based dashboard designed to provide key business insights at a glance. It features a clean, professional, and visually appealing interface for monitoring sales, user engagement, and other critical metrics.
 
-## 2. 애플리케이션 구조 및 기능
+**Core Technologies:**
+*   **Framework:** React (with Vite)
+*   **Styling:** Tailwind CSS
+*   **Deployment:** Cloudflare Pages
 
-### 2.1. UI/UX 디자인
-- **스타일:** 세련되고 현대적인 금융 대시보드 스타일.
-- **레이아웃:** 직관적인 카드 기반 레이아웃과 명확한 정보 계층 구조.
-- **아이콘:** `lucide-react` 라이브러리를 활용하여 명확하고 깔끔한 아이콘 시스템 구축.
-- **컬러 팔레트:** 신뢰감을 주는 네이비/블루 계열을 주 색상으로 사용하며, 상승/하락 등 데이터 시각화를 위한 보조 색상 사용.
+## **2. Implemented Features & Design (As of Initial Deployment)**
 
-### 2.2. 핵심 컴포넌트
+This section documents the state of the application after the initial setup and troubleshooting phase.
 
-- **`App.tsx` (메인 레이아웃):**
-    - 전체 애플리케이션의 최상위 레이아웃.
-    - 히어로 섹션, ETF 리스트, 배당 계산기 등 모든 주요 컴포넌트를 통합.
+### **Initial Structure & Components:**
 
-- **히어로 섹션:**
-    - 서비스의 핵심 슬로건과 가치를 전달하는 동적인 소개 영역.
+*   **`App.jsx`:** The main application component. It renders the primary dashboard layout.
+*   **Component Breakdown:** The UI is composed of several key components to display data cards, charts, and navigation elements.
+    *   Header with title and user profile section.
+    *   Main content area with a grid of data cards (e.g., 'Total Sales', 'Total Users', 'Total Profit', 'Total Orders').
+    *   A section for recent orders and a placeholder for a chart.
+*   **Static Data:** The application currently uses hardcoded static data for all metrics and user information as a placeholder.
 
-- **ETF 정보 섹션:**
-    - **`ETFList.tsx`:** 실시간 인기, 거래량, 테마별 ETF 목록을 카드 형태로 표시.
-    - **`ETFDetail.tsx`:** 사용자가 ETF 카드를 클릭했을 때, 상세 정보를 보여주는 모달 또는 페이지. Gemini API를 연동하여 ETF에 대한 '초등학생 눈높이' 3줄 요약 제공.
-    - 금융 용어에 대한 툴팁(Tooltip) 기능 포함.
+### **Styling & Design:**
 
-- **`Calculator.tsx` (배당 계산기):**
-    - **킬러 콘텐츠.**
-    - 사용자가 현재 자산/투자금을 입력하면 월 예상 배당금을 계산.
-    - 계산 결과를 "월 치킨 0.5마리", "월 임대료 수준" 등 재미있고 직관적인 시각적 비유로 변환하여 표시.
-    - 경제적 자유 달성률(%)을 시각적인 프로그레스 바로 보여주고, 동기부여를 위한 "진행시켜!" 버튼 및 애니메이션 효과 포함.
+*   **Theme:** A professional and modern dark theme.
+*   **Layout:** A responsive grid-based layout that organizes data cards and modules cleanly.
+*   **Color Palette:**
+    *   Background: Dark slate/charcoal (`bg-slate-800`, `bg-gray-900`)
+    *   Accent/Primary: A vibrant shade of blue (`bg-blue-600`) for buttons and highlights.
+    *   Text: White and light grays for readability (`text-white`, `text-gray-400`).
+*   **Typography:** Clean, sans-serif fonts for a modern look.
+*   **Iconography:** Utilizes icons (e.g., for data cards and user profile) to enhance visual communication.
 
-### 2.3. 서비스 로직
+## **3. Development & Deployment Journey (Initial Setup)**
 
-- **`src/services/gemini.ts`:**
-    - Google Generative AI SDK (`gemini-1.5-flash` 모델) 연동.
-    - ETF 관련 정보를 받아 초등학생도 이해하기 쉬운 비유적인 설명으로 가공하는 함수 포함.
-    - API Key는 `.env` 파일의 `VITE_GEMINI_API_KEY`를 통해 안전하게 관리.
+This section outlines the steps and troubleshooting undertaken to get the initial version of the application deployed and running correctly.
 
----
+**Initial Goal:** Create a React-based dashboard application using Tailwind CSS and deploy it to Cloudflare Pages.
 
-## 3. 개발 및 배포 현황 (Current Status)
+**Action Plan & Troubleshooting Log:**
 
-1.  **[완료]** `blueprint.md` 파일 생성.
-2.  **[완료]** 필수 라이브러리 설치: `@google/generative-ai`, `lucide-react`.
-3.  **[완료]** `.env` 파일 설정 및 `.gitignore`에 추가하여 API 키 보안 처리.
-4.  **[완료]** `src/services/gemini.ts` 파일 생성 및 Gemini API 연동 함수 작성.
-5.  **[완료]** `src/components/Calculator.tsx` 배당 계산기 컴포넌트 UI 및 로직 구현.
-6.  **[완료]** `src/App.tsx` 리팩토링 및 신규 컴포넌트 통합.
-7.  **[완료]** 전체적인 스타일링 및 UI 개선 (Tailwind CSS).
-8.  **[진행중]** **배포 및 최종 테스트:**
-    - Cloudflare 환경 변수에 API 키 설정 완료.
-    - 새로운 배포를 트리거하여 흰 화면 문제 해결 여부 확인.
-    - 기능 정상 작동 최종 검증.
+1.  **Project Scaffolding:** Initialized a React project using Vite.
+2.  **Component Development:** Developed the core UI components for the dashboard in `App.jsx`, using Tailwind CSS classes for styling.
+3.  **Initial Deployment Attempt:** Deployed to Cloudflare Pages.
+    *   **Problem:** The deployed site appeared without any styling (plain HTML).
+    *   **Root Cause:** The project was missing the necessary Tailwind CSS configuration files (`tailwind.config.js`, `postcss.config.js`). Cloudflare's build process had no instructions on how to process the Tailwind classes.
+4.  **Fix Attempt 1: Add Config Files:**
+    *   **Action:** Created `tailwind.config.js` and `postcss.config.js`.
+    *   **New Problem (Build Error):** `[ReferenceError] module is not defined in ES module scope`.
+    *   **Root Cause:** The project's `package.json` was set to `"type": "module"`, but `postcss.config.js` used the older CommonJS `module.exports` syntax.
+5.  **Fix Attempt 2: Correct Module Format:**
+    *   **Action:** Renamed `postcss.config.js` to `postcss.config.cjs` to explicitly mark it as a CommonJS file.
+    *   **New Problem (Build Error):** `Cannot find module 'tailwindcss'`.
+    *   **Root Cause:** The required `devDependencies` (`tailwindcss`, `postcss`, `autoprefixer`) were not installed in the project.
+6.  **Fix Attempt 3: Install Dependencies:**
+    *   **Action:** Ran `npm install -D tailwindcss postcss autoprefixer`.
+    *   **New Problem (Build Error):** `Error: [postcss] It looks like you're trying to use tailwindcss directly... install @tailwindcss/postcss`.
+    *   **Root Cause:** The installed version of Tailwind CSS (v4 alpha) requires a new, separate PostCSS plugin (`@tailwindcss/postcss`) which was not yet standard practice in older versions.
+7.  **Fix Attempt 4: Update to Modern Tailwind Plugin:**
+    *   **Action:** Installed the new plugin with `npm install -D @tailwindcss/postcss` and updated `postcss.config.cjs` to use `'@tailwindcss/postcss': {}`.
+8.  **Final Result: Successful Deployment:**
+    *   The final push triggered a successful build on Cloudflare Pages. The application is now live and fully styled as intended.
