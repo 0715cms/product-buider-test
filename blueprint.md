@@ -1,35 +1,58 @@
-# Blueprint: ETF for Economic Freedom (경제적 자유를 위한 ETF)
+# E-경영 (E-Economic Freedom) 프로젝트 청사진
 
-## Overview
-This project aims to build a visually stunning and informative website that introduces Exchange Traded Funds (ETFs) as a key tool for achieving economic freedom. The site will provide clear explanations, benefits, and popular examples of ETFs, catering to both beginners and intermediate investors.
+## 1. 프로젝트 개요
 
-## Project Outline
-- **Theme**: Economic Freedom through smart ETF investing.
-- **Tone**: Professional, encouraging, and clear.
-- **Target Audience**: Individuals looking for long-term wealth-building strategies.
-
-### Style & Design
-- **Visuals**: Modern, clean, and interactive UI.
-- **Typography**: Strong headlines using system-native fonts (`var(--heading)`). Clear, legible body text (`var(--sans)`).
-- **Colors**: Leveraging existing CSS variables (`--accent` for highlights, `--text-h` for headings).
-- **Interactivity**: 
-  - Hover animations on informational cards.
-  - Interactive "Top ETFs" list.
-  - Smooth transitions and a responsive layout.
-- **Aesthetics**: Subtle noise texture on the background (if possible), multi-layered shadows for depth, and polished gradients.
-
-### Features
-1. **Hero Section**: A bold headline "ETF로 경제적 자유를 이루자" with a compelling subtext.
-2. **"What is an ETF?" Section**: A clear, simplified explanation of ETF mechanics.
-3. **Benefits Section**: Highlighting diversification, low fees, and accessibility.
-4. **Popular ETFs Showcase**: Featuring well-known ETFs like SPY, QQQ, and VOO with brief descriptions.
-5. **Call to Action**: Encouraging users to start their investment journey.
-
-## Current Plan: Initial Site Build
-1. **Structure `App.tsx`**: Implement the sections defined above using semantic HTML and React functional components.
-2. **Style `App.css`**: Add modern, responsive styles for each section.
-3. **Enhance Interactivity**: Add CSS transitions and hover effects to make the site feel "alive."
-4. **Validate**: Ensure the site looks great on both mobile and desktop, and respects both light and dark modes.
+- **서비스명:** E-경영 (E-Economic Freedom, E-ETF)
+- **핵심 슬로건:** "ETF로 경제적 자유를 영위하자, 진행시켜!"
+- **기술 스택:** React, Vite, TypeScript, Tailwind CSS, Gemini API (Google Generative AI SDK)
+- **타겟 유저:** 초등학생도 이해할 수 있을 만큼 쉬운 정보를 원하는 투자 입문자
 
 ---
-*Last Updated: 2026-04-10*
+
+## 2. 애플리케이션 구조 및 기능
+
+### 2.1. UI/UX 디자인
+- **스타일:** 세련되고 현대적인 금융 대시보드 스타일.
+- **레이아웃:** 직관적인 카드 기반 레이아웃과 명확한 정보 계층 구조.
+- **아이콘:** `lucide-react` 라이브러리를 활용하여 명확하고 깔끔한 아이콘 시스템 구축.
+- **컬러 팔레트:** 신뢰감을 주는 네이비/블루 계열을 주 색상으로 사용하며, 상승/하락 등 데이터 시각화를 위한 보조 색상 사용.
+
+### 2.2. 핵심 컴포넌트
+
+- **`App.tsx` (메인 레이아웃):**
+    - 전체 애플리케이션의 최상위 레이아웃.
+    - 히어로 섹션, ETF 리스트, 배당 계산기 등 모든 주요 컴포넌트를 통합.
+
+- **히어로 섹션:**
+    - 서비스의 핵심 슬로건과 가치를 전달하는 동적인 소개 영역.
+
+- **ETF 정보 섹션:**
+    - **`ETFList.tsx`:** 실시간 인기, 거래량, 테마별 ETF 목록을 카드 형태로 표시.
+    - **`ETFDetail.tsx`:** 사용자가 ETF 카드를 클릭했을 때, 상세 정보를 보여주는 모달 또는 페이지. Gemini API를 연동하여 ETF에 대한 '초등학생 눈높이' 3줄 요약 제공.
+    - 금융 용어에 대한 툴팁(Tooltip) 기능 포함.
+
+- **`Calculator.tsx` (배당 계산기):**
+    - **킬러 콘텐츠.**
+    - 사용자가 현재 자산/투자금을 입력하면 월 예상 배당금을 계산.
+    - 계산 결과를 "월 치킨 0.5마리", "월 임대료 수준" 등 재미있고 직관적인 시각적 비유로 변환하여 표시.
+    - 경제적 자유 달성률(%)을 시각적인 프로그레스 바로 보여주고, 동기부여를 위한 "진행시켜!" 버튼 및 애니메이션 효과 포함.
+
+### 2.3. 서비스 로직
+
+- **`src/services/gemini.ts`:**
+    - Google Generative AI SDK (`gemini-1.5-flash` 모델) 연동.
+    - ETF 관련 정보를 받아 초등학생도 이해하기 쉬운 비유적인 설명으로 가공하는 함수 포함.
+    - API Key는 `.env` 파일의 `VITE_GEMINI_API_KEY`를 통해 안전하게 관리.
+
+---
+
+## 3. 개발 계획 (Current Step)
+
+1.  **[완료]** `blueprint.md` 파일 생성.
+2.  **[진행중]** 필수 라이브러리 설치: `@google/generative-ai` (Gemini API), `lucide-react` (아이콘).
+3.  `.env` 파일 설정 및 `.gitignore`에 추가하여 API 키 보안 처리.
+4.  `src/services/gemini.ts` 파일 생성 및 Gemini API 연동 함수 작성.
+5.  `src/components/Calculator.tsx` 배당 계산기 컴포넌트 UI 및 로직 구현.
+6.  `src/App.tsx` 리팩토링 및 신규 컴포넌트 통합.
+7.  전체적인 스타일링 및 UI 개선 (Tailwind CSS).
+8.  기능 테스트 및 오류 수정.

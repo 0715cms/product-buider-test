@@ -1,121 +1,103 @@
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Calculator from './components/Calculator';
+import { getETFExplanation } from './services/gemini';
+import { ShieldCheck, TrendingUp, Zap } from 'lucide-react';
+
+const etfList = [
+  { ticker: 'SPY', name: 'S&P 500', description: '미국 500대 기업에 투자하는 세계 최대 ETF' },
+  { ticker: 'QQQ', name: 'Nasdaq 100', description: '기술주 중심의 성장 ETF' },
+  { ticker: 'VTI', name: 'Total Stock Market', description: '미국 전체 주식 시장에 분산 투자' },
+  { ticker: 'SCHD', name: 'U.S. Dividend Equity', description: '미국의 고배당주에 집중 투자' },
+  { ticker: 'JEPI', name: 'JPMorgan Equity Premium', description: '커버드콜 전략을 활용한 월배당 ETF' },
+];
 
 function App() {
+  const [selectedEtf, setSelectedEtf] = useState<string | null>(null);
+  const [explanation, setExplanation] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleEtfClick = async (etfName: string) => {
+    if (selectedEtf === etfName) {
+      setSelectedEtf(null);
+      setExplanation('');
+      return;
+    }
+
+    setSelectedEtf(etfName);
+    setIsLoading(true);
+    try {
+      const result = await getETFExplanation(etfName);
+      setExplanation(result);
+    } catch (error) {
+      setExplanation('설명을 불러오는 데 실패했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="etf-app">
+    <div className="bg-gray-900 min-h-screen text-white font-sans">
       {/* Hero Section */}
-      <section id="hero">
-        <div className="hero-content">
-          <div className="badge">Economic Freedom</div>
-          <h1>ETF로 경제적 자유를 이루자</h1>
-          <p className="subtitle">
-            스마트한 투자자들의 선택, 분산 투자와 저렴한 비용으로 <br />
-            당신의 자산을 안전하게 성장시키세요.
-          </p>
-          <div className="hero-cta">
-            <button className="cta-primary">시작하기</button>
-            <button className="cta-secondary">더 알아보기</button>
-          </div>
-        </div>
-      </section>
+      <header className="text-center py-20 px-4 bg-gradient-to-b from-gray-900 to-gray-800">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
+          E-경영: <span className="text-purple-400">ETF</span>로 경제적 자유를!
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+          "진행시켜!" 당신의 자산을 스마트하게 성장시키는 가장 확실한 방법.
+        </p>
+      </header>
 
-      <div className="ticks"></div>
-
-      {/* Intro Section: What is an ETF? */}
-      <section id="what-is-etf" className="content-section">
-        <div className="section-header">
-          <h2>ETF란 무엇인가요?</h2>
-          <p>Exchange Traded Fund의 약자로, 거래소에서 주식처럼 편리하게 거래되는 펀드입니다.</p>
-        </div>
-        <div className="info-grid">
-          <div className="info-card">
-            <div className="icon">📈</div>
-            <h3>주식의 편리함</h3>
-            <p>언제 어디서나 실시간으로 사고팔 수 있습니다.</p>
+      <main className="container mx-auto px-4 py-12">
+        {/* ETF List Section */}
+        <section className="mb-24">
+          <h2 className="text-4xl font-bold text-center mb-12">핵심 ETF 포트폴리오</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {etfList.map((etf) => (
+              <div
+                key={etf.ticker}
+                className={`bg-gray-800 p-6 rounded-2xl shadow-lg cursor-pointer transition-all duration-300 transform hover:-translate-y-2 hover:shadow-purple-500/30 ${selectedEtf === etf.name ? 'ring-2 ring-purple-500' : ''}`}
+                onClick={() => handleEtfClick(etf.name)}
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="inline-block bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full mb-2">{etf.ticker}</span>
+                    <h3 className="text-2xl font-bold">{etf.name}</h3>
+                  </div>
+                  {etf.ticker === 'SCHD' && <ShieldCheck className="text-blue-400" size={28} />}
+                  {etf.ticker === 'QQQ' && <TrendingUp className="text-green-400" size={28} />}
+                  {etf.ticker === 'JEPI' && <Zap className="text-yellow-400" size={28} />}
+                </div>
+                <p className="text-gray-400 mt-2">{etf.description}</p>
+                {selectedEtf === etf.name && (
+                  <div className="mt-4 p-4 bg-gray-700 rounded-lg">
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+                        <p className="ml-3">똑똑하게 설명 만드는 중...</p>
+                      </div>
+                    ) : (
+                      <p className="text-purple-300 whitespace-pre-wrap font-medium">{explanation}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-          <div className="info-card">
-            <div className="icon">🧺</div>
-            <h3>펀드의 안정성</h3>
-            <p>수십, 수백 개의 기업에 분산 투자하여 위험을 낮춥니다.</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <div className="ticks"></div>
+        {/* Calculator Section */}
+        <section>
+           <h2 className="text-4xl font-bold text-center mb-12">미래를 계산해 보세요</h2>
+          <Calculator />
+        </section>
+      </main>
 
-      {/* Benefits Section */}
-      <section id="benefits" className="content-section">
-        <div className="section-header">
-          <h2>ETF 투자의 장점</h2>
-        </div>
-        <div className="benefits-grid">
-          <div className="benefit-item">
-            <div className="check">✓</div>
-            <div>
-              <h3>저렴한 운용 보수</h3>
-              <p>일반 펀드보다 훨씬 낮은 수수료로 장기 투자에 유리합니다.</p>
-            </div>
-          </div>
-          <div className="benefit-item">
-            <div className="check">✓</div>
-            <div>
-              <h3>투명한 운용</h3>
-              <p>매일매일 어떤 종목에 투자하고 있는지 실시간으로 공개됩니다.</p>
-            </div>
-          </div>
-          <div className="benefit-item">
-            <div className="check">✓</div>
-            <div>
-              <h3>소액 분산 투자</h3>
-              <p>적은 금액으로도 전 세계 시장에 투자할 수 있습니다.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-
-      {/* Top ETFs Section */}
-      <section id="top-etfs" className="content-section">
-        <div className="section-header">
-          <h2>주요 ETF 리스트</h2>
-          <p>전 세계에서 가장 사랑받는 대표적인 ETF들입니다.</p>
-        </div>
-        <div className="etf-cards">
-          <div className="etf-card highlighted">
-            <span className="ticker">SPY</span>
-            <h3>S&P 500</h3>
-            <p>미국 500대 기업에 투자하는 세계 최대 ETF</p>
-          </div>
-          <div className="etf-card highlighted">
-            <span className="ticker">QQQ</span>
-            <h3>Nasdaq 100</h3>
-            <p>애플, 마이크로소프트 등 기술주 중심의 성장 ETF</p>
-          </div>
-          <div className="etf-card highlighted">
-            <span className="ticker">VOO</span>
-            <h3>Vanguard S&P 500</h3>
-            <p>매우 저렴한 보수로 S&P 500 지수를 추종</p>
-          </div>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-
-      {/* CTA Section */}
-      <section id="cta">
-        <div className="cta-container">
-          <h2>경제적 자유를 향한 첫 걸음</h2>
-          <p>지금 바로 ETF와 함께 미래를 준비하세요.</p>
-          <button className="cta-large">투자 시작하기</button>
-        </div>
-      </section>
-
-      <footer id="spacer">
-        <p>&copy; 2026 ETF Guide. All rights reserved.</p>
+      <footer className="text-center py-8 mt-16 border-t border-gray-800">
+        <p className="text-gray-500">&copy; {new Date().getFullYear()} E-경영. All rights reserved. 진행시켜!</p>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
