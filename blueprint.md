@@ -46,13 +46,16 @@
 
 ---
 
-## 3. 개발 계획 (Current Step)
+## 3. 개발 및 배포 현황 (Current Status)
 
 1.  **[완료]** `blueprint.md` 파일 생성.
-2.  **[진행중]** 필수 라이브러리 설치: `@google/generative-ai` (Gemini API), `lucide-react` (아이콘).
-3.  `.env` 파일 설정 및 `.gitignore`에 추가하여 API 키 보안 처리.
-4.  `src/services/gemini.ts` 파일 생성 및 Gemini API 연동 함수 작성.
-5.  `src/components/Calculator.tsx` 배당 계산기 컴포넌트 UI 및 로직 구현.
-6.  `src/App.tsx` 리팩토링 및 신규 컴포넌트 통합.
-7.  전체적인 스타일링 및 UI 개선 (Tailwind CSS).
-8.  기능 테스트 및 오류 수정.
+2.  **[완료]** 필수 라이브러리 설치: `@google/generative-ai`, `lucide-react`.
+3.  **[완료]** `.env` 파일 설정 및 `.gitignore`에 추가하여 API 키 보안 처리.
+4.  **[완료]** `src/services/gemini.ts` 파일 생성 및 Gemini API 연동 함수 작성.
+5.  **[완료]** `src/components/Calculator.tsx` 배당 계산기 컴포넌트 UI 및 로직 구현.
+6.  **[완료]** `src/App.tsx` 리팩토링 및 신규 컴포넌트 통합.
+7.  **[완료]** 전체적인 스타일링 및 UI 개선 (Tailwind CSS).
+8.  **[진행중]** **배포 및 최종 테스트:**
+    - Cloudflare 환경 변수에 API 키 설정 완료.
+    - 새로운 배포를 트리거하여 흰 화면 문제 해결 여부 확인.
+    - 기능 정상 작동 최종 검증.
