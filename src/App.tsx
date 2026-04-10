@@ -87,7 +87,6 @@ function App() {
                     <span className="inline-block bg-violet-600 text-white text-sm font-semibold px-3 py-1 rounded-full mb-2">{etf.ticker}</span>
                     <h3 className="text-2xl font-bold">{etf.name}</h3>
                   </div>
-                   {/* Icons can be kept or modified */}
                 </div>
                 <p className="text-gray-400 mt-2">{etf.description}</p>
 
