@@ -3,7 +3,7 @@ import './App.css';
 import Calculator from './components/Calculator';
 import { getETFExplanation } from './services/gemini';
 import { getEtfPrice } from './services/finnhub';
-import { ShieldCheck, TrendingUp, Zap, DollarSign } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 
 const etfList = [
   { ticker: 'SPY', name: 'S&P 500', description: '미국 500대 기업에 투자하는 세계 최대 ETF' },

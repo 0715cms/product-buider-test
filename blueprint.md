@@ -1,66 +1,46 @@
-# **Project Blueprint: E-경영 (E-Management) Dashboard**
+# **Project Blueprint: E-경영 (E-Management) ETF Dashboard**
 
 This document serves as the single source of truth for the "E-경영" application. It details the project's overview, implemented features, design choices, and the plan for ongoing development.
 
 ## **1. Project Overview**
 
-**Purpose:** "E-경영" is a modern, web-based dashboard designed to provide key business insights at a glance. It features a clean, professional, and visually appealing interface for monitoring sales, user engagement, and other critical metrics.
+**Purpose:** "E-경영" is a sleek, modern web dashboard designed for aspiring investors. It provides detailed explanations and real-time price data for key Exchange-Traded Funds (ETFs), along with a calculator to project financial goals, empowering users to make informed investment decisions with the motto, "진행시켜!"
 
 **Core Technologies:**
 *   **Framework:** React (with Vite)
 *   **Styling:** Tailwind CSS
-*   **Deployment:** Cloudflare Pages
+*   **AI Integration:** Google Gemini API for generating dynamic ETF explanations.
+*   **Financial Data:** Finnhub API for real-time stock/ETF price quoting.
+*   **Icons:** `lucide-react` for clean and modern iconography.
+*   **Deployment:** Cloudflare Pages (with automated Git integration).
 
-## **2. Implemented Features & Design (As of Initial Deployment)**
+## **2. Implemented Features & Design**
 
-This section documents the state of the application after the initial setup and troubleshooting phase.
+This section documents the current state of the application, reflecting all the features built.
 
-### **Initial Structure & Components:**
+### **UI & UX Design:**
+*   **Overall Theme:** A sophisticated and modern dark theme utilizing a `slate` and `violet` color palette, ensuring a visually appealing and consistent experience across the entire application.
+*   **Hero Section:** A prominent header with the title "E-경영: ETF로 경제적 자유를!" to clearly state the app's purpose.
+*   **ETF Portfolio Section:** A curated list of key ETFs presented as interactive cards. Hover effects and a selection ring (`ring-2 ring-violet-500`) provide clear visual feedback.
+*   **Economic Freedom Calculator:** A dedicated component for financial projection, seamlessly integrated with the main page's theme.
 
-*   **`App.jsx`:** The main application component. It renders the primary dashboard layout.
-*   **Component Breakdown:** The UI is composed of several key components to display data cards, charts, and navigation elements.
-    *   Header with title and user profile section.
-    *   Main content area with a grid of data cards (e.g., 'Total Sales', 'Total Users', 'Total Profit', 'Total Orders').
-    *   A section for recent orders and a placeholder for a chart.
-*   **Static Data:** The application currently uses hardcoded static data for all metrics and user information as a placeholder.
+### **Core Functionality:**
+*   **Dynamic ETF Information:**
+    *   When a user clicks on an ETF card, the card expands to reveal detailed information.
+    *   **AI-Powered Explanations:** A call is made to the **Google Gemini API** to fetch a rich, detailed explanation of the selected ETF.
+    *   **Real-Time Pricing:** Simultaneously, a call is made to the **Finnhub API** to fetch the current market price of the ETF, which is displayed in USD format.
+*   **Performance-Optimizing Caching:**
+    *   To prevent API rate-limiting and enhance speed, a caching mechanism is implemented.
+    *   The fetched ETF explanation and price are stored in the component's state (`etfDataCache`).
+    *   Subsequent clicks on the same ETF load the data instantly from the cache, avoiding redundant network requests.
+*   **Economic Freedom Calculator:**
+    *   Allows users to input their total investment amount.
+    *   Calculates and displays the estimated monthly dividend, assuming a 4% annual yield.
+    *   Provides a fun, relatable metric: the number of fried chickens one could buy monthly with the dividend.
+    *   Calculates and visually represents the "Economic Freedom" achievement rate against a pre-set monthly goal of 3 million KRW, using a progress bar.
 
-### **Styling & Design:**
-
-*   **Theme:** A professional and modern dark theme.
-*   **Layout:** A responsive grid-based layout that organizes data cards and modules cleanly.
-*   **Color Palette:**
-    *   Background: Dark slate/charcoal (`bg-slate-800`, `bg-gray-900`)
-    *   Accent/Primary: A vibrant shade of blue (`bg-blue-600`) for buttons and highlights.
-    *   Text: White and light grays for readability (`text-white`, `text-gray-400`).
-*   **Typography:** Clean, sans-serif fonts for a modern look.
-*   **Iconography:** Utilizes icons (e.g., for data cards and user profile) to enhance visual communication.
-
-## **3. Development & Deployment Journey (Initial Setup)**
-
-This section outlines the steps and troubleshooting undertaken to get the initial version of the application deployed and running correctly.
-
-**Initial Goal:** Create a React-based dashboard application using Tailwind CSS and deploy it to Cloudflare Pages.
-
-**Action Plan & Troubleshooting Log:**
-
-1.  **Project Scaffolding:** Initialized a React project using Vite.
-2.  **Component Development:** Developed the core UI components for the dashboard in `App.jsx`, using Tailwind CSS classes for styling.
-3.  **Initial Deployment Attempt:** Deployed to Cloudflare Pages.
-    *   **Problem:** The deployed site appeared without any styling (plain HTML).
-    *   **Root Cause:** The project was missing the necessary Tailwind CSS configuration files (`tailwind.config.js`, `postcss.config.js`). Cloudflare's build process had no instructions on how to process the Tailwind classes.
-4.  **Fix Attempt 1: Add Config Files:**
-    *   **Action:** Created `tailwind.config.js` and `postcss.config.js`.
-    *   **New Problem (Build Error):** `[ReferenceError] module is not defined in ES module scope`.
-    *   **Root Cause:** The project's `package.json` was set to `"type": "module"`, but `postcss.config.js` used the older CommonJS `module.exports` syntax.
-5.  **Fix Attempt 2: Correct Module Format:**
-    *   **Action:** Renamed `postcss.config.js` to `postcss.config.cjs` to explicitly mark it as a CommonJS file.
-    *   **New Problem (Build Error):** `Cannot find module 'tailwindcss'`.
-    *   **Root Cause:** The required `devDependencies` (`tailwindcss`, `postcss`, `autoprefixer`) were not installed in the project.
-6.  **Fix Attempt 3: Install Dependencies:**
-    *   **Action:** Ran `npm install -D tailwindcss postcss autoprefixer`.
-    *   **New Problem (Build Error):** `Error: [postcss] It looks like you're trying to use tailwindcss directly... install @tailwindcss/postcss`.
-    *   **Root Cause:** The installed version of Tailwind CSS (v4 alpha) requires a new, separate PostCSS plugin (`@tailwindcss/postcss`) which was not yet standard practice in older versions.
-7.  **Fix Attempt 4: Update to Modern Tailwind Plugin:**
-    *   **Action:** Installed the new plugin with `npm install -D @tailwindcss/postcss` and updated `postcss.config.cjs` to use `'@tailwindcss/postcss': {}`.
-8.  **Final Result: Successful Deployment:**
-    *   The final push triggered a successful build on Cloudflare Pages. The application is now live and fully styled as intended.
+### **Code & Architecture:**
+*   **Component-Based Structure:** The application is broken down into logical components (`App.tsx`, `Calculator.tsx`).
+*   **Service Abstraction:** API call logic is separated into dedicated service files (`src/services/gemini.ts`, `src/services/finnhub.ts`) for better maintainability.
+*   **Asynchronous Operations:** `async/await` and `Promise.all` are used to handle API calls efficiently, fetching data in parallel to improve load times.
+*   **Secure API Key Management:** API keys are stored in a `.env` file, which is excluded from version control via `.gitignore` to maintain security.
