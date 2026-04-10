@@ -35,7 +35,6 @@ function App() {
     if (!etfDataCache[name]) {
       setIsLoading(true);
       try {
-        // Fetch explanation and price in parallel
         const [explanation, price] = await Promise.all([
           getETFExplanation(name),
           getEtfPrice(ticker),
