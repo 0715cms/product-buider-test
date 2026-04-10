@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BarChart, PiggyBank, TrendingUp, Target } from 'lucide-react';
+import { BarChart, PiggyBank, Target } from 'lucide-react';
 
 export default function Calculator() {
   const [investment, setInvestment] = useState<number>(10000000);
