@@ -5,6 +5,10 @@ import { getETFExplanation } from './services/gemini';
 import { getEtfPrice } from './services/finnhub';
 import { DollarSign } from 'lucide-react';
 
+// Debugging: Log environment variables to check if they are loaded.
+console.log('VITE_GEMINI_API_KEY:', import.meta.env.VITE_GEMINI_API_KEY);
+console.log('VITE_FINNHUB_API_KEY:', import.meta.env.VITE_FINNHUB_API_KEY);
+
 const etfList = [
   { ticker: 'SPY', name: 'S&P 500', description: '미국 500대 기업에 투자하는 세계 최대 ETF' },
   { ticker: 'QQQ', name: 'Nasdaq 100', description: '기술주 중심의 성장 ETF' },
