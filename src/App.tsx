@@ -121,10 +121,10 @@ function App() {
           </div>
         </section>
 
-        {/* <section>
+        <section>
           <h2 className="text-4xl font-bold text-center mb-12">미래를 계산해 보세요</h2>
           <Calculator />
-        </section> */}
+        </section>
       </main>
 
       <footer className="text-center py-8 mt-16 border-t border-slate-800">
