@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { BarChart, PiggyBank, TrendingUp } from 'lucide-react';
+import { BarChart, PiggyBank, TrendingUp, Target } from 'lucide-react';
 
 export default function Calculator() {
   const [investment, setInvestment] = useState<number>(10000000);
+  const [goalAmount, setGoalAmount] = useState<number>(3000000);
+
   const monthlyDividend = (investment * 0.04) / 12;
-  const freedomPercentage = Math.min((monthlyDividend / 3000000) * 100, 100);
+  const freedomPercentage = goalAmount > 0 ? Math.min((monthlyDividend / goalAmount) * 100, 100) : 0;
 
   const getChickenCount = () => {
     return (monthlyDividend / 20000).toFixed(1);
@@ -32,6 +34,20 @@ export default function Calculator() {
           />
         </div>
 
+         <div>
+          <label htmlFor="goalAmount" className="block text-sm font-medium text-gray-300 mb-2">
+            월 목표 배당금 (원)
+          </label>
+          <input
+            type="number"
+            id="goalAmount"
+            value={goalAmount}
+            onChange={(e) => setGoalAmount(Number(e.target.value))}
+            className="w-full bg-slate-700 border-slate-600 rounded-lg p-3 text-xl text-white focus:ring-violet-500 focus:border-violet-500 transition"
+            step={100000}
+          />
+        </div>
+
         <div className="bg-slate-700 p-6 rounded-lg">
           <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
             <BarChart className="text-green-400" />
@@ -45,16 +61,19 @@ export default function Calculator() {
 
         <div className="bg-slate-700 p-6 rounded-lg">
           <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
-            <TrendingUp className="text-blue-400" />
-            경제적 자유 달성률 (월 300만원 목표)
+            <Target className="text-blue-400" />
+            경제적 자유 달성률
           </h3>
-          <div className="w-full bg-slate-600 rounded-full h-4 overflow-hidden">
+          <div className="w-full bg-slate-600 rounded-full h-4 overflow-hidden mt-3 mb-2">
             <div
               className="bg-gradient-to-r from-blue-400 to-violet-500 h-4 transition-all duration-500"
               style={{ width: `${freedomPercentage}%` }}
             ></div>
           </div>
-          <p className="text-2xl font-bold text-center mt-3">{freedomPercentage.toFixed(1)}%</p>
+           <p className="text-sm text-right text-gray-400">
+             목표: {goalAmount.toLocaleString()}원 / 월
+          </p>
+          <p className="text-2xl font-bold text-center mt-1">{freedomPercentage.toFixed(1)}%</p>
         </div>
       </div>
 
